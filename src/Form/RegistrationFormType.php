@@ -34,14 +34,8 @@ class RegistrationFormType extends AbstractType
       ->add('email', TextType::class, [
         'label' => 'Email *',
       ])
-      ->add('allergenes', EntityType::class, array(
-        'class' => Allergene::class,
-        'label' => 'Allergenes *',
-        'query_builder' => function (AllergeneRepository $er) {
-          return $er->findAll();
-        }
-      )
-      )
+      ->add('allergenes')
+      ->add('diets')
       ->add('plainPassword', PasswordType::class, [
         // instead of being set onto the object directly,
         // this is read and encoded in the controller

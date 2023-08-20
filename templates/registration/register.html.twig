@@ -3,24 +3,25 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+
 <div class="container">
   <div class="d-flex flex-column align-items-center justify-content-center m-3">
-    <h1 class="m-3 fs-4 fw-bold">Inscription</h1>
+    <h1 class="m-3 fs-4 fw-bold">Création d'un patient</h1>
 
     {{ form_errors(registrationForm) }}
 
    
     {{ form_start(registrationForm) }}
-    <td>
-        {{ form_row(registrationForm.name) }}</td>
+        {{ form_row(registrationForm.name) }}
         {{ form_row(registrationForm.sur_name) }}
         {{ form_row(registrationForm.city) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.allergenes) }}
+        {{ form_row(registrationForm.diets) }}
         {{ form_row(registrationForm.plainPassword) }}
 
         <button class="mt-3 btn btn-lg btn-primary" type="submit">
-          S'inscrire
+          Créer le patient
       </button>
     {{ form_end(registrationForm) }}
       </div>

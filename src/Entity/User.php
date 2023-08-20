@@ -40,12 +40,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
   #[ORM\Column(length: 100, nullable: true)]
   private ?string $city = null;
 
-  #[ORM\OneToMany(mappedBy: 'user', targetEntity: Allergene::class)]
+  #[ORM\ManyToMany(targetEntity: Allergene::class, inversedBy: 'users')]
   private Collection $allergenes;
+
+  #[ORM\ManyToMany(targetEntity: Diet::class, inversedBy: 'users')]
+  private Collection $diets;
 
   public function __construct()
   {
       $this->allergenes = new ArrayCollection();
+      $this->diets = new ArrayCollection();
   }
 
   public function getId(): ?int
@@ -159,29 +163,51 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
    */
   public function getAllergenes(): Collection
   {
-    return $this->allergenes;
+      return $this->allergenes;
   }
 
   public function addAllergene(Allergene $allergene): static
   {
-    if (!$this->allergenes->contains($allergene)) {
-      $this->allergenes->add($allergene);
-      $allergene->setUser($this);
-    }
+      if (!$this->allergenes->contains($allergene)) {
+          $this->allergenes->add($allergene);
+      }
 
-    return $this;
+      return $this;
   }
 
   public function removeAllergene(Allergene $allergene): static
   {
-      if ($this->allergenes->removeElement($allergene)) {
-          // set the owning side to null (unless already changed)
-          if ($allergene->getUser() === $this) {
-              $allergene->setUser(null);
-          }
+      $this->allergenes->removeElement($allergene);
+
+      return $this;
+  }
+
+  /**
+   * @return Collection<int, Diet>
+   */
+  public function getDiets(): Collection
+  {
+      return $this->diets;
+  }
+
+  public function addDiet(Diet $diet): static
+  {
+      if (!$this->diets->contains($diet)) {
+          $this->diets->add($diet);
       }
 
       return $this;
+  }
+
+  public function removeDiet(Diet $diet): static
+  {
+      $this->diets->removeElement($diet);
+
+      return $this;
+  }
+
+  public function __toString() {
+    return $this->name;
   }
 
 }

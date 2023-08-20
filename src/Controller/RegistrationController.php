@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,8 +35,7 @@ class RegistrationController extends AbstractController
             $user->setName($form->get('name')->getData());
             $user->setSurName($form->get('sur_name')->getData());
             $user->setCity($form->get('city')->getData());
-            // $user->addAllergene($form->get('allergenes')->getData());
-
+                    
             $entityManager->persist($user);
             $entityManager->flush();
 

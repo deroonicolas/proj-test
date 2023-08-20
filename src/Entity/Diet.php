@@ -2,23 +2,23 @@
 
 namespace App\Entity;
 
-use App\Repository\AllergeneRepository;
+use App\Repository\DietRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AllergeneRepository::class)]
-class Allergene
+#[ORM\Entity(repositoryClass: DietRepository::class)]
+class Diet
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'allergenes')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'diets')]
     private Collection $users;
 
     public function __construct()
@@ -55,7 +55,7 @@ class Allergene
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->addAllergene($this);
+            $user->addDiet($this);
         }
 
         return $this;
@@ -64,7 +64,7 @@ class Allergene
     public function removeUser(User $user): static
     {
         if ($this->users->removeElement($user)) {
-            $user->removeAllergene($this);
+            $user->removeDiet($this);
         }
 
         return $this;

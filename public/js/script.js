@@ -9,3 +9,11 @@ inputs.forEach(element => {
   element.classList.add('class')
   element.setAttribute('class', 'form-control')
 });
+
+const userForm = document.querySelector('form[name="user"]')
+const inputsUser = subcriptionForm.querySelectorAll('div > input')
+
+inputsUser.forEach(element => {
+  element.classList.add('class')
+  element.setAttribute('class', 'form-control')
+});
